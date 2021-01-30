@@ -1,0 +1,84 @@
+<div class="text-center">
+    <img src="https://firebasestorage.googleapis.com/v0/b/covid-45242.appspot.com/o/favicon.ico?alt=media&token=7fb212c5-13e9-4598-97ff-4e4a95346d1b" alt="covidImage">
+    <h2>Covid-19</h2>
+    <h2 style="color:grey">Live Updates and Statistics</h2>
+</div>
+  
+<div class="row">
+  <div class="col-sm-6" *ngIf=covidService.userSignedIn()>
+      <button class="btn btn-danger" (click)="covidService.signOut()">Sign Out</button>
+  </div>
+
+  <div class="col-sm-6" *ngIf=!covidService.userSignedIn()>
+    <button class="btn btn-info" (click)="covidService.signInWithGoogle()">Sign in</button>
+  </div>
+  
+  <div class="col-sm-6">
+    <button class="btn btn-info" (click)="goToNews()">Add a news</button>
+</div>
+</div>
+  
+<div class="text-center"><h2>Corona Virus Summary in {{name}} </h2></div>
+  
+  
+
+  <div *ngFor="let d of tableData">
+    {{d.key}} | {{d.value}}
+  </div>
+
+
+
+  <div class="text-center"><h2>Corona Virus Cases Distribution in {{name}} </h2> </div>
+
+
+  <div class="chart-wrapper" *ngIf="pieChartData">
+    <canvas baseChart
+    [data]="pieChartData"
+    [labels]="pieChartLabels"
+    [chartType]="pieChartType"
+    [options]="pieChartOptions"
+    [plugins]="pieChartPlugins"
+    [legend]="pieChartLegend">
+    </canvas>
+  </div>
+
+
+  <div class="text-center"><h2>Daily Corona Virus Cases in {{name}}</h2></div>
+
+
+  <div>
+    <div>
+      <div style="display: block">
+        <canvas baseChart *ngIf="barChartData"
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center"><h2>Total Corona Virus Cases in {{name}}</h2></div>
+
+  <div style="display: block;">
+    <canvas baseChart width="400" height="400" *ngIf="lineChartData"
+      [datasets]="lineChartData"
+      [labels]="lineChartLabels"
+      [options]="lineChartOptions"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      [plugins]="lineChartPlugins">
+    </canvas>
+  </div>
+
+  <h2> News from {{name}} !</h2>
+
+  <div *ngFor="let item of news">
+    {{item.description}} | {{item.date}}
+  </div>
+  <div *ngIf="!hasNews"> <h3>No news yet !</h3></div>
+
+  <a href="url">Data Source : COVID-19 API / Johns Hopkins CSSE</a>

@@ -1,0 +1,43 @@
+
+
+
+ <div class="container">
+    <h2>Add a news</h2>
+    
+    <div class="mt-2">    <button *ngIf=!covidService.userSignedIn() class="btn btn-info" (click)="covidService.signInWithGoogle()">Sign in to add news !</button>
+    </div>
+    <div class="mt-2">
+        <button class="btn btn-primary btn-lg btn-block" *ngIf="boolNews" (click)="getAccess()"> Get news control</button>
+    </div>
+    <div class="row custom-wrapper">
+       <div class="col-md-12">
+          <!-- Form starts -->
+          <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="descriptionInput">Description</label>
+                    <input type="text" id="descriptionInput" name="descriptionInput" placeHolder="Enter a description." class="form-control" formControlName="description" required>    
+                </div>
+                <div class="col-md-6">
+                    <label for="dateInput">Date</label>
+                    <input type="date" id="dateInput" name="dateInput" class="form-control" formControlName="date" required>    
+                </div>
+            </div>
+            
+          <div class="group-gap">
+             <div class="d-block my-3">
+                <div class="mb-3">
+                   <select class="custom-select" (change)="changeLocation($event)" formControlName="location">
+                      <option value="">Choose a location</option>
+                      <option *ngFor="let l of locations" [ngValue]="l">{{l}}</option>
+                   </select>
+                </div>
+             </div>
+          </div>
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-danger btn-lg btn-block">Submit</button>
+          </form><!-- Form ends -->
+       </div>
+    </div>
+ </div>
+

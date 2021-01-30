@@ -1,0 +1,132 @@
+<div class="text-center">
+  <img src="https://firebasestorage.googleapis.com/v0/b/covid-45242.appspot.com/o/favicon.ico?alt=media&token=7fb212c5-13e9-4598-97ff-4e4a95346d1b" alt="covidImage">
+  <h2>Covid-19</h2>
+  <h2 style="color:grey">Live Updates and Statistics</h2>
+</div>
+
+<div class="row">
+  <div class="col-sm-6" *ngIf=covidService.userSignedIn()>
+      <button class="btn btn-danger" (click)="covidService.signOut()">Sign Out</button>
+  </div>
+  <div class="col-sm-6" *ngIf=!covidService.userSignedIn()>
+    <button class="btn btn-info" (click)="covidService.signInWithGoogle()">Sign in</button>
+  </div>
+  <div class="col-sm-6">
+      <button class="btn btn-info" (click)="goToNews()">Add a news</button>
+  </div>
+</div>
+
+
+
+<div class="text-center"><h2>Corona Virus Summary Worldwide</h2></div>
+
+<div *ngFor="let item of tableData">
+  {{item.key}} | {{item.value}}
+</div>
+
+<div class="text-center"><h2>Corona Virus Cases Distribution Worldwide</h2></div>
+
+<div class="chart-wrapper" *ngIf="pieChartData">
+  <canvas baseChart
+  [data]="pieChartData"
+  [labels]="pieChartLabels"
+  [chartType]="pieChartType"
+  [options]="pieChartOptions"
+  [plugins]="pieChartPlugins"
+  [legend]="pieChartLegend">
+  </canvas>
+</div>
+
+<div class="text-center"><h2>Daily Corona Virus Cases Worldwide</h2></div>
+
+<div>
+  <div>
+    <div style="display: block">
+      <canvas baseChart *ngIf="barChartData"
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [chartType]="barChartType">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<div class="text-center"><h2>Total Corona Virus Cases Worldwide</h2></div><div class="text-center">
+
+<div style="display: block;">
+  <canvas baseChart width="400" height="400" *ngIf="lineChartData"
+    [datasets]="lineChartData"
+    [labels]="lineChartLabels"
+    [options]="lineChartOptions"
+    [legend]="lineChartLegend"
+    [chartType]="lineChartType"
+    [plugins]="lineChartPlugins">
+  </canvas>
+</div>
+
+<div class="text-center"><h2> News from around the world !</h2></div>
+
+<div *ngFor="let item of news">
+  {{item.description}} | {{item.date}}
+</div>
+<div *ngIf="!hasNews"> <h3>No news yet !</h3></div>
+
+<div class="text-center"><h2>Corona Virus Cases By Country</h2></div>
+
+<table mat-table [dataSource]="countryTableData" matSort class="mat-elevation-z8">
+
+  <ng-container matColumnDef="country">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+    <td mat-cell *matCellDef="let element"> {{element.Country}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="newCases">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> New Cases </th>
+    <td mat-cell *matCellDef="let element"> {{element.NewConfirmed}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalCases">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Cases </th>
+    <td mat-cell *matCellDef="let element"> {{element.TotalConfirmed}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="newRecovered">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> New Recoveries </th>
+    <td mat-cell *matCellDef="let element"> {{element.NewRecovered}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalRecovered">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Recoveries </th>
+    <td mat-cell *matCellDef="let element"> {{element.TotalRecovered}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="newDeaths">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> New Deaths </th>
+    <td mat-cell *matCellDef="let element"> {{element.NewDeaths}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalDeaths">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Deaths </th>
+    <td mat-cell *matCellDef="let element"> {{element.TotalDeaths}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="getDetails">
+    <th mat-header-cell *matHeaderCellDef>  </th>
+    <td mat-cell *matCellDef="let element"> <button (click)="btnClick(element.Slug)">Get Details</button> </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="countryColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: countryColumns;"></tr>
+</table>
+
+
+
+
+
+
+
+<a href="https://covid19api.com">Data Source : COVID-19 API / Johns Hopkins CSSE</a>
+

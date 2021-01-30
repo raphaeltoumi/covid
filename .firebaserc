@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "covid-45242": {
+      "hosting": {
+        "covid": [
+          "covid-45242"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "covid-45242"
+  }
+}
